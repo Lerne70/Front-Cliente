@@ -1,0 +1,128 @@
+<nav class="navbar navbar-cliente">
+  <!-- Navbar content -->
+</nav>
+
+<swal 
+#deleteSwal 
+title="¿Esta seguro?" 
+text="Si se elimina un registro no se podrá recuperar" 
+icon="warning"
+[showCancelButton]="true"
+[focusCancel]="true" 
+confirmButtonText="Eliminar" 
+cancelButtonText="Cancelar"
+confirmButtonColor="#d33" 
+cancelButtonColor="#3085d6" 
+(confirm)="handleDenial()">
+</swal>
+
+<!-- Title Start -->
+<div class="container col-md-12 text-center mt-4 mb-5">
+  <h1>{{ titulo }}</h1>
+</div>
+<!-- Title End -->
+
+<div class="container">
+  <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+    <div class="btn-group" role="group" aria-label="First group">
+      <button class="btn btn-danger ms-3 me-2 btn-pdf" type="button">
+        <fa-icon [icon]="faFilePDF"></fa-icon> Exportar a PDF
+      </button>
+      <button class="btn btn-success ms-2 btn-excel" type="button">
+        <fa-icon [icon]="faFileExcel"></fa-icon> Exportar a Excel
+      </button>
+    </div>
+    <div class="input-group">
+      <button type="button" class="btn btn-success me-5 agregar-cliente" data-bs-toggle="modal"
+        data-bs-target="#exampleModal">
+        <fa-icon [icon]="faPlus"></fa-icon> Agregar
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="container my-3">
+  <!-- Modal Start-->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{ tituloModal }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          </button>
+        </div>
+        <div class="modal-body">
+          <app-formulario-cliente></app-formulario-cliente>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success btn-Guardar">Guardar</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal End -->
+
+  <!-- Table Start -->
+  <table class="table my-3">
+    <thead class="table-cliente">
+      <tr>
+        <th scope="col">Nombre Comercial</th>
+        <th scope="col">Razón social</th>
+        <th scope="col">Correo electrónico</th>
+        <th scope="col">Telefono</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+        <td>Estado</td>
+        <td>
+          <button class="btn btn-primary me-2">
+            <fa-icon [icon]="faEdit"></fa-icon>
+          </button>
+          <button class="btn btn-danger ms-2" [swal]="deleteSwal">
+            <fa-icon [icon]="faDelete"></fa-icon>
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+        <td>Estado</td>
+        <td>
+          <button class="btn btn-primary me-2">
+            <fa-icon [icon]="faEdit"></fa-icon>
+          </button>
+          <button class="btn btn-danger ms-2">
+            <fa-icon [icon]="faDelete"></fa-icon>
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td colspan="2">Larry the Bird</td>
+        <td>@twitter</td>
+        <td>Estado</td>
+        <td>
+          <button class="btn btn-primary me-2">
+            <fa-icon [icon]="faEdit"></fa-icon>
+          </button>
+          <button class="btn btn-danger ms-2">
+            <fa-icon [icon]="faDelete"></fa-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- Table End -->
+</div>

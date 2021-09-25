@@ -1,0 +1,40 @@
+.table-cliente{
+    background-color: #3270A6;
+    color: white;
+}
+
+.navbar-cliente{
+    background-color: #ACDEF2;
+    height: 100px;
+}
+
+.agregar-cliente{
+    background-color: #1BB55C;
+    color: white;
+}
+
+.btn-pdf{
+    background-color: #FE5000;
+    color: white;
+}
+
+.btn-excel{
+    background-color: #038C73;
+    color: white;
+}
+
+.modal-header{
+    background-color: #038C73;
+    color: white;
+}
+
+.btn-close{
+    background-color: white;
+    color: white;
+}
+
+.btn-Guardar{
+    background-color: #1BB55C;
+    color: white;
+}
+
