@@ -86,7 +86,7 @@ export class InteraccionesService {
    * @returns json con dato de localizacion
    */
   ubicarCliente(direccion: string):Observable<Resultado> {
-    return this.httpClient.get<Resultado>(`${environment.URLHERE}${direccion}&apiKey=7g_X7QuSEfojfY_AHLDFCzkPXcVYCpztAYQiXeE65pM`);
+    return this.httpClient.get<Resultado>(`${environment.URLHERE}${direccion}&apiKey=vNDCVItPSTeb7H8vFNp6C_Cq__dYKKc3PjRYBhvC8-A`);
   }
 
 }

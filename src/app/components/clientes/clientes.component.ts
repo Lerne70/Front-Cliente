@@ -56,7 +56,7 @@ export class ClientesComponent implements OnInit {
     private dataservices: InteraccionesService
   )  {
     this.platform = new H.service.Platform({
-      "apikey": "v7oeRHnP3hp_vrKq51Y-pgS9OZPSd7xHfQuNPMiDzm4"
+      "apikey": "lcNuwkFJYwIBth8OCUVWLTlFEtmILi9tJVwr9xUfIPY"
     });
   }
 

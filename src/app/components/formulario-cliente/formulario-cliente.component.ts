@@ -39,7 +39,7 @@ export class FormularioClienteComponent implements OnInit {
     private dataservices: InteraccionesService
   ) { 
     this.platform = new H.service.Platform({
-      "apikey": "CSj1Pmz-PyT9GaTC3OHqlxGja6CeKU0HYsWtusaXwqA"
+      "apikey": "lcNuwkFJYwIBth8OCUVWLTlFEtmILi9tJVwr9xUfIPY"
     });
   }
 
