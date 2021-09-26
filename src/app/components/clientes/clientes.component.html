@@ -39,7 +39,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">{{ tituloModal }}</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="mostrarCliente()">
           </button>
         </div>
         <div class="modal-body">
@@ -47,7 +47,7 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeModal()">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="mostrarCliente()">
             Cerrar
           </button>
         </div>
@@ -61,7 +61,7 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">{{ tituloModal }}</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Modificar Cliente</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
           </button>
         </div>
@@ -136,17 +136,16 @@
             </div>
           </div>
 
-          <button (click)="modificarCliente();">Mostrar</button>
+          <button class="btn btn-primary mt-3" (click)="modificarCliente();"><fa-icon [icon]="faEdit"></fa-icon> Modificar</button>
           <div class="border-bottom my-3"></div>
 
           <div class="row g-3 mx-4">
-            <div id="mapa" #map style="width: 640px; height: 384px"></div>
+            <div id="mapa2" #map style="width: 640px; height: 384px"></div>
           </div>
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-success btn-Guardar">Guardar</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="mostrarCliente()">
             Cerrar
           </button>
         </div>

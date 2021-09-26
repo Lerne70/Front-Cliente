@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable } from 'rxjs';
-import { Cliente, modCliente, newCliente } from '../others/interfaces';
+import { Cliente, modCliente, newCliente, Resultado } from '../others/interfaces';
 import { environment } from 'src/environments/environment'; 
 
 @Injectable({
   providedIn: 'root'
 })
 export class InteraccionesService {
-
   constructor(
     private httpClient: HttpClient
   ) { }
@@ -63,6 +62,10 @@ export class InteraccionesService {
 
   eliminarCliente(id: number):Observable<any> {
     return this.httpClient.delete<any>(`${environment.URL}/cliente/${id}`);
+  }
+
+  ubicarCliente(direccion: string):Observable<Resultado> {
+    return this.httpClient.get<Resultado>(`${environment.URLHERE}${direccion}&apiKey=G-18BRIgI-YT1FJRbyAxc__Y53KqHKF4qhojRhY04aI`);
   }
 
 }

@@ -6,12 +6,16 @@ import { InteraccionesService } from 'src/app/services/interacciones.service';
 import { FormularioClienteComponent } from '../formulario-cliente/formulario-cliente.component';
 import { modCliente, elimCliente } from '../../others/interfaces';
 
+declare var H: any;
+
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
   styleUrls: ['./clientes.component.css']
 })
 export class ClientesComponent implements OnInit {
+  private platform: any;
+
   titulo = "Clientes";
 
   tituloModal = "Registrar Cliente";
@@ -42,7 +46,11 @@ export class ClientesComponent implements OnInit {
 
   constructor (
     private dataservices: InteraccionesService
-  )  {}
+  )  {
+    this.platform = new H.service.Platform({
+      "apikey": "CSj1Pmz-PyT9GaTC3OHqlxGja6CeKU0HYsWtusaXwqA"
+    });
+  }
 
   ngOnInit(){ 
     this.mostrarCliente();
@@ -66,6 +74,7 @@ export class ClientesComponent implements OnInit {
   consultarCliente(idCliente: number){
     this.dataservices.consultarCliente(idCliente).subscribe( (res) =>{
       this.cliente = res
+      this.posicion(this.cliente.estado, this.cliente.municipio, this.cliente.colonia, this.cliente.codigoPostal, this.cliente.calle, this.cliente.numExt)
     }, (err) => {
       console.log(err)
     });
@@ -88,6 +97,45 @@ export class ClientesComponent implements OnInit {
     }, (err) => {
       console.log(err)
     })
+  }
+
+  posicion(estado: string, municipio: string, colonia: string, codigoPostal: number, calle: string, numExt: string){
+    let reEstado = estado.split(' ').join('+');
+    let reMunicipio = municipio.split(' ').join('+');
+    let reColonia = colonia.split(' ').join('+');
+    let reCalle = calle.split(' ').join('+');
+    let reNumExt = numExt.split(' ').join('+');
+    let domicilio = `${reEstado}+${reMunicipio}+${reColonia}+${codigoPostal}+${reCalle}+${reNumExt}`;
+    this.dataservices.ubicarCliente(domicilio).subscribe( (res) => {
+      res.items.forEach(item => {
+        console.log(item.position.lat, item.position.lng)
+        this.dibujarMapa(item.position.lat, item.position.lng)
+      });
+    }, (err) => {
+      console.log(err)
+    })
+  }
+
+  dibujarMapa(lat: number, lng: number): void {
+    let mapa = document.getElementById('mapa2');
+    mapa!.innerHTML="";
+    let defaultLayers = this.platform.createDefaultLayers();
+    let map = new H.Map(
+        mapa,
+        defaultLayers.vector.normal.map,
+        {
+            zoom: 5,
+            center: { lat: 21.1165397, lng: -101.7194143 },
+            pixelRatio: window.devicePixelRatio || 1
+        }
+    );
+    let marker = new H.map.Marker({ lat: lat, lng: lng });
+    map.addObject(marker);
+    
+    window.addEventListener('resize', () => map.getViewPort().resize());
+    // let behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(mapa));
+
+    // let ui = H.ui.UI.createDefault(mapa, defaultLayers);
   }
 
 
