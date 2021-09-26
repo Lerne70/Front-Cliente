@@ -126,7 +126,7 @@ export class ClientesComponent implements OnInit {
         mapa,
         defaultLayers.vector.normal.map,
         {
-            zoom: 5,
+            zoom: 15,
             center: { lat: 21.1165397, lng: -101.7194143 },
             pixelRatio: window.devicePixelRatio || 1
         }
@@ -136,7 +136,6 @@ export class ClientesComponent implements OnInit {
     
     window.addEventListener('resize', () => map.getViewPort().resize());
     // let behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(mapa));
-
     // let ui = H.ui.UI.createDefault(mapa, defaultLayers);
   }
 

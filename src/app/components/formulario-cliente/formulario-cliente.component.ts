@@ -91,7 +91,7 @@ export class FormularioClienteComponent implements OnInit {
         mapa,
         defaultLayers.vector.normal.map,
         {
-            zoom: 5,
+            zoom: 15,
             center: { lat: 21.1165397, lng: -101.7194143 },
             pixelRatio: window.devicePixelRatio || 1
         }
