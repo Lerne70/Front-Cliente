@@ -2,18 +2,9 @@
   <!-- Navbar content -->
 </nav>
 
-<swal 
-#deleteSwal 
-title="¿Esta seguro?" 
-text="Si se elimina un registro no se podrá recuperar" 
-icon="warning"
-[showCancelButton]="true"
-[focusCancel]="true" 
-confirmButtonText="Eliminar" 
-cancelButtonText="Cancelar"
-confirmButtonColor="#d33" 
-cancelButtonColor="#3085d6" 
-(confirm)="handleDenial()">
+<swal #deleteSwal title="¿Esta seguro?" text="Si se elimina un registro no se podrá recuperar" icon="warning"
+  [showCancelButton]="true" [focusCancel]="true" confirmButtonText="Eliminar" cancelButtonText="Cancelar"
+  confirmButtonColor="#d33" cancelButtonColor="#3085d6" (confirm)="eliminarCliente()">
 </swal>
 
 <!-- Title Start -->
@@ -53,6 +44,105 @@ cancelButtonColor="#3085d6"
         </div>
         <div class="modal-body">
           <app-formulario-cliente></app-formulario-cliente>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeModal()">
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal End -->
+
+  <!-- Modal Start-->
+  <div class="modal fade" id="exampleModalMod" tabindex="-1" aria-labelledby="exampleModalLabelMod" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{ tituloModal }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3 mx-4">
+            <div class="col-sm-6">
+              <label for="nombre-Cliente">Nombre Comercial</label>
+              <input type="text" class="form-control" placeholder="Nombre Comercial" aria-label="Nombre Comercial"
+                name="nombre-Cliente" id="nombre-Cliente" [(ngModel)]="cliente.nombreComercial">
+            </div>
+            <div class="col-sm-6">
+              <label for="razonSocial-Cliente">Razón Social</label>
+              <input type="text" class="form-control" placeholder="Razóm Social" aria-label="Razóm Social"
+                name="razonSocial-Cliente" id="razonSocial-Cliente" [(ngModel)]="cliente.razonSocial">
+            </div>
+          </div>
+          <div class="border-bottom my-3"></div>
+          <div class="row g-3 mx-4">
+            <div class="col-sm-6">
+              <label for="correoE-Cliente">Correo Electrónico</label>
+              <input type="email" class="form-control" placeholder="Correo Electrónico" aria-label="Correo Electrónico"
+                name="correoE-Cliente" id="correoE-Cliente" [(ngModel)]="cliente.correoElectronico">
+            </div>
+            <div class="col-sm-6">
+              <label for="telefono-Cliente">Teléfono</label>
+              <input type="text" class="form-control" placeholder="Teléfono" aria-label="Teléfono"
+                name="telefono-Cliente" id="telefono-Cliente" [(ngModel)]="cliente.telefono">
+            </div>
+          </div>
+          <div class="border-bottom my-3"></div>
+          <div class="row g-3 mx-4">
+            <div class="col-sm-6">
+              <label for="estado-Cliente">Estado</label>
+              <input type="text" class="form-control" placeholder="Estado" aria-label="Estado" name="estado-Cliente"
+                id="estado-Cliente" [(ngModel)]="cliente.estado">
+            </div>
+            <div class="col-sm-6">
+              <label for="municipio-Cliente">Municipio</label>
+              <input type="text" class="form-control" placeholder="Municipio" aria-label="Municipio"
+                name="municipio-Cliente" id="municipio-Cliente" [(ngModel)]="cliente.municipio">
+            </div>
+          </div>
+          <div class="border-bottom my-3"></div>
+          <div class="row g-3 mx-4">
+            <div class="col-sm-6">
+              <label for="colonia-Cliente">Colonia</label>
+              <input type="text" class="form-control" placeholder="Colonia" aria-label="Colonia" name="colonia-Cliente"
+                id="colonia-Cliente" [(ngModel)]="cliente.colonia">
+            </div>
+            <div class="col-sm-6">
+              <label for="CP-Cliente">Código postal</label>
+              <input type="number" class="form-control" placeholder="Código postal" aria-label="Código postal"
+                name="CP-Cliente" id="CP-Cliente" [(ngModel)]="cliente.codigoPostal">
+            </div>
+          </div>
+          <div class="border-bottom my-3"></div>
+          <div class="row g-3 mx-4">
+            <div class="col-sm-4">
+              <label for="calle-Cliente">Calle</label>
+              <input type="text" class="form-control" placeholder="Calle" aria-label="Calle" name="calle-Cliente"
+                id="calle-Cliente" [(ngModel)]="cliente.calle">
+            </div>
+            <div class="col-sm-4">
+              <label for="numExt-Cliente">Número Exterior</label>
+              <input type="text" class="form-control" placeholder="Número Exterior" aria-label="Número Exterior"
+                name="numExt-Cliente" id="numExt-Cliente" [(ngModel)]="cliente.numExt">
+            </div>
+            <div class="col-sm-4">
+              <label for="numInt-Cliente">Número Interior</label>
+              <input type="text" class="form-control" placeholder="Número Interior" aria-label="Número Interior"
+                name="numInt-Cliente" id="numInt-Cliente" [(ngModel)]="cliente.numInt">
+            </div>
+          </div>
+
+          <button (click)="modificarCliente();">Mostrar</button>
+          <div class="border-bottom my-3"></div>
+
+          <div class="row g-3 mx-4">
+            <div id="mapa" #map style="width: 640px; height: 384px"></div>
+          </div>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-success btn-Guardar">Guardar</button>
@@ -69,6 +159,7 @@ cancelButtonColor="#3085d6"
   <table class="table my-3">
     <thead class="table-cliente">
       <tr>
+        <th scope="col">#</th>
         <th scope="col">Nombre Comercial</th>
         <th scope="col">Razón social</th>
         <th scope="col">Correo electrónico</th>
@@ -78,46 +169,19 @@ cancelButtonColor="#3085d6"
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>Estado</td>
+      <tr *ngFor="let cliente of listClientes; let i = index">
+        <th scope="row">{{i + 1}}</th>
+        <td>{{ cliente.nombreComercial }}</td>
+        <td>{{ cliente.razonSocial }}</td>
+        <td>{{ cliente.correoElectronico }}</td>
+        <td>{{ cliente.telefono }}</td>
+        <td>{{ cliente.estado }}</td>
         <td>
-          <button class="btn btn-primary me-2">
+          <button class="btn btn-primary me-2" data-bs-toggle="modal"
+          data-bs-target="#exampleModalMod" (click)="consultarCliente(cliente.id)">
             <fa-icon [icon]="faEdit"></fa-icon>
           </button>
-          <button class="btn btn-danger ms-2" [swal]="deleteSwal">
-            <fa-icon [icon]="faDelete"></fa-icon>
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-        <td>Estado</td>
-        <td>
-          <button class="btn btn-primary me-2">
-            <fa-icon [icon]="faEdit"></fa-icon>
-          </button>
-          <button class="btn btn-danger ms-2">
-            <fa-icon [icon]="faDelete"></fa-icon>
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td colspan="2">Larry the Bird</td>
-        <td>@twitter</td>
-        <td>Estado</td>
-        <td>
-          <button class="btn btn-primary me-2">
-            <fa-icon [icon]="faEdit"></fa-icon>
-          </button>
-          <button class="btn btn-danger ms-2">
+          <button class="btn btn-danger ms-2" [swal]="deleteSwal" (click)="consultarCliente(cliente.id)">
             <fa-icon [icon]="faDelete"></fa-icon>
           </button>
         </td>

@@ -7,6 +7,8 @@ import { ClientesComponent } from './components/clientes/clientes.component';
 import { FormularioClienteComponent } from './components/formulario-cliente/formulario-cliente.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -19,7 +21,9 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
-    SweetAlert2Module.forRoot()
+    SweetAlert2Module.forRoot(),
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
