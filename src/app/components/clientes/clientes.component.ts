@@ -8,6 +8,9 @@ import { modCliente, elimCliente } from '../../others/interfaces';
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
 
+import * as XLSX from 'xlsx'
+import Swal from 'sweetalert2';
+
 declare var H: any;
 
 @Component({
@@ -46,11 +49,14 @@ export class ClientesComponent implements OnInit {
     numInt: ''
   };
 
+  private hoja: XLSX.WorkSheet;
+  private libro: XLSX.WorkBook;
+
   constructor (
     private dataservices: InteraccionesService
   )  {
     this.platform = new H.service.Platform({
-      "apikey": "CSj1Pmz-PyT9GaTC3OHqlxGja6CeKU0HYsWtusaXwqA"
+      "apikey": "v7oeRHnP3hp_vrKq51Y-pgS9OZPSd7xHfQuNPMiDzm4"
     });
   }
 
@@ -58,6 +64,9 @@ export class ClientesComponent implements OnInit {
     this.mostrarCliente();
   }
 
+  /**
+   * Metodo para cerrar los modales
+   */
   closeModal() {
     let modal = document.getElementById('exampleModal');
     modal!.hidden;
@@ -65,6 +74,10 @@ export class ClientesComponent implements OnInit {
     console.log("cerrar");
   }
 
+  /**
+   * Metodo para cargar la tabla haciendo uso
+   * del servicio mostrarClientes()
+   */
   mostrarCliente() {
     this.dataservices.mostrarClientes().subscribe( (res) => {
       this.listClientes = res
@@ -73,6 +86,11 @@ export class ClientesComponent implements OnInit {
     });
   }
 
+  /**
+   * Metdo que retorna un solo cliente con el que
+   * coincida el id enviada
+   * @param idCliente 
+   */
   consultarCliente(idCliente: number){
     this.dataservices.consultarCliente(idCliente).subscribe( (res) =>{
       this.cliente = res
@@ -82,16 +100,51 @@ export class ClientesComponent implements OnInit {
     });
   }
 
+  /**
+   * Metodo para modificar los datos del usuario
+   * haciendo uso del modificarCliente()
+   */
   modificarCliente(){
-    this.dataservices.modificarCliente(this.cliente).subscribe( (res) => {
-      console.log("respuesta Modificar " + res)
-      this.mostrarCliente()
-    }, (err) => {
-      console.log(err)
-    });
-    this.mostrarCliente();
+    if(this.cliente.nombreComercial != '' || 
+       this.cliente.calle != '' || 
+       this.cliente.codigoPostal != 0 || 
+       this.cliente.colonia != '' ||
+       this.cliente.correoElectronico != '' ||
+       this.cliente.estado != '' ||
+       this.cliente.municipio != '' ||
+       this.cliente.numExt != '' ||
+       this.cliente.razonSocial != '' ||
+       this.cliente.telefono != '')
+       {
+        this.dataservices.modificarCliente(this.cliente).subscribe( (res) => {
+          console.log("respuesta Modificar " + res)
+          Swal.fire(
+            'Operacion exitosa',
+            'El cliente fue agregado con exito',
+            'success'
+          )
+          this.mostrarCliente()
+        }, (err) => {
+          console.log(err)
+          Swal.fire(
+            'Algo salio mal',
+            'Inrgrese nuevamente sus datos',
+            'error'
+          )
+        });
+       } else {
+        Swal.fire(
+          'Algo salio mal',
+          'Ingrese todos los datos',
+          'error'
+        )
+       }
+    
   }
 
+  /**
+   * Metodo para eliminar un registro de la base de datos
+   */
   eliminarCliente(){
     this.dataservices.eliminarCliente(this.cliente.id).subscribe( (res) => {
       console.log("respuesta Elimianr " + res)
@@ -101,6 +154,16 @@ export class ClientesComponent implements OnInit {
     })
   }
 
+  /**
+   * Metodo para obtener la latitud y longitud
+   * de un cliente recien ingresado
+   * @param estado 
+   * @param municipio 
+   * @param colonia 
+   * @param codigoPostal 
+   * @param calle 
+   * @param numExt 
+   */
   posicion(estado: string, municipio: string, colonia: string, codigoPostal: number, calle: string, numExt: string){
     let reEstado = estado.split(' ').join('+');
     let reMunicipio = municipio.split(' ').join('+');
@@ -118,6 +181,11 @@ export class ClientesComponent implements OnInit {
     })
   }
 
+  /**
+   * Metodo para renderizar el mapa y colocar un marcador
+   * @param lat 
+   * @param lng 
+   */
   dibujarMapa(lat: number, lng: number): void {
     let mapa = document.getElementById('mapa2');
     mapa!.innerHTML="";
@@ -127,7 +195,7 @@ export class ClientesComponent implements OnInit {
         defaultLayers.vector.normal.map,
         {
             zoom: 15,
-            center: { lat: 21.1165397, lng: -101.7194143 },
+            center: { lat: lat, lng:lng },
             pixelRatio: window.devicePixelRatio || 1
         }
     );
@@ -138,12 +206,26 @@ export class ClientesComponent implements OnInit {
     // let behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(mapa));
     // let ui = H.ui.UI.createDefault(mapa, defaultLayers);
   }
-
+  
+  /**
+   * Metodo que genera un archivo PDF basados en la tanbla mostrada
+   */
   generarPDF(){
     const doc = new jsPDF()
     autoTable(doc, { html: '#tableClientes' })
     doc.save('tableClientes.pdf')
   }
 
+  /**
+   * Metodo para generar el excel con todo los datos que 
+   * se muestran en la tabla
+   */
+  generarExcel(){
+    this.hoja = XLSX.utils.json_to_sheet(this.listClientes);
+    this.libro = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(this.libro, this.hoja, 'Datos Cliente');
+    XLSX.writeFile(this.libro, 'Listado-Clientes.xlsx');
+  }
 
 }
