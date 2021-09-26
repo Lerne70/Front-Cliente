@@ -16,7 +16,7 @@
 <div class="container">
   <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
     <div class="btn-group" role="group" aria-label="First group">
-      <button class="btn btn-danger ms-3 me-2 btn-pdf" type="button">
+      <button class="btn btn-danger ms-3 me-2 btn-pdf" type="button" (click)="generarPDF()">
         <fa-icon [icon]="faFilePDF"></fa-icon> Exportar a PDF
       </button>
       <button class="btn btn-success ms-2 btn-excel" type="button">
@@ -155,7 +155,7 @@
   <!-- Modal End -->
 
   <!-- Table Start -->
-  <table class="table my-3">
+  <table class="table my-3" id="tableClientes">
     <thead class="table-cliente">
       <tr>
         <th scope="col">#</th>
@@ -163,7 +163,7 @@
         <th scope="col">Razón social</th>
         <th scope="col">Correo electrónico</th>
         <th scope="col">Telefono</th>
-        <th scope="col">Estado</th>
+        <th scope="col">Localizacion</th>
         <th scope="col">Acciones</th>
       </tr>
     </thead>
@@ -174,13 +174,13 @@
         <td>{{ cliente.razonSocial }}</td>
         <td>{{ cliente.correoElectronico }}</td>
         <td>{{ cliente.telefono }}</td>
-        <td>{{ cliente.estado }}</td>
+        <td>{{ cliente.estado }} {{ cliente.municipio }} {{cliente.colonia}} {{cliente.codigoPostal}} {{cliente.calle}} {{cliente.numExt}} </td>
         <td>
-          <button class="btn btn-primary me-2" data-bs-toggle="modal"
+          <button class="btn btn-primary" data-bs-toggle="modal"
           data-bs-target="#exampleModalMod" (click)="consultarCliente(cliente.id)">
             <fa-icon [icon]="faEdit"></fa-icon>
           </button>
-          <button class="btn btn-danger ms-2" [swal]="deleteSwal" (click)="consultarCliente(cliente.id)">
+          <button class="btn btn-danger" [swal]="deleteSwal" (click)="consultarCliente(cliente.id)">
             <fa-icon [icon]="faDelete"></fa-icon>
           </button>
         </td>

@@ -23,6 +23,8 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@sweetalert2/ngx-sweetalert2": "^10.0.0",
     "bootstrap": "^5.1.1",
+    "jspdf": "^2.4.0",
+    "jspdf-autotable": "^3.5.20",
     "rxjs": "~6.6.0",
     "sweetalert2": "^11.1.7",
     "tslib": "^2.3.0",

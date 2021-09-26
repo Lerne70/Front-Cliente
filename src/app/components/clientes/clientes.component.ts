@@ -5,6 +5,8 @@ import { Cliente } from 'src/app/others/interfaces';
 import { InteraccionesService } from 'src/app/services/interacciones.service';
 import { FormularioClienteComponent } from '../formulario-cliente/formulario-cliente.component';
 import { modCliente, elimCliente } from '../../others/interfaces';
+import jsPDF from 'jspdf'
+import autoTable from 'jspdf-autotable'
 
 declare var H: any;
 
@@ -136,6 +138,12 @@ export class ClientesComponent implements OnInit {
     // let behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(mapa));
 
     // let ui = H.ui.UI.createDefault(mapa, defaultLayers);
+  }
+
+  generarPDF(){
+    const doc = new jsPDF()
+    autoTable(doc, { html: '#tableClientes' })
+    doc.save('tableClientes.pdf')
   }
 
 
