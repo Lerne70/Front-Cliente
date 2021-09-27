@@ -56,7 +56,7 @@ export class ClientesComponent implements OnInit {
     private dataservices: InteraccionesService
   )  {
     this.platform = new H.service.Platform({
-      "apikey": "769cAUNy2frpBaenvbzYN_hI0oPkEfz9m3VHpkZwIVQ"
+      "apikey": "BxI0Xmzl8BHfCzGLDwkee-ascvmM80oAPc6uKKff_TQ"
     });
   }
 
@@ -123,6 +123,7 @@ export class ClientesComponent implements OnInit {
             'El cliente fue agregado con exito',
             'success'
           )
+          this.consultarCliente(this.cliente.id)
           this.mostrarCliente()
         }, (err) => {
           console.log(err)
